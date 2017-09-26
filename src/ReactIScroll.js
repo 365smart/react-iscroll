@@ -80,16 +80,17 @@ class ReactIScroll extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log('ReactIScroll constructor props:', props);
     // if (props.enablePullDownToRefresh) {
-    // if (props.pullDownToRefresh) {
-    //   this.props.options.probeType = 2
-    // }
+    if (props.pullDownToRefresh) {
+      this.props.options.probeType = 2
+    }
 
     this.state = {
       pullDownActive: false,
       pullDownVisible: false,
     };
+
+    this.iReactIScrollInstance = null;
 
     this.onScroll = this.onScroll.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
@@ -120,30 +121,28 @@ class ReactIScroll extends React.Component {
         scroller.style.minHeight = (wrapper.clientHeight + 1) + "px"
       }
 
-      console.log(this.props);
-      console.log(this.props.iScroll);
 
       // If iscroll instance exists, just update
-      if (this.props.iScroll) {
-        this.props.iScroll.refresh();
-        return
+      if (this.iReactIScrollInstance) {
+        this.iReactIScrollInstance.refresh();
+        return;
       }
 
       // Create new iscroll instance here
-      this.props.iScroll = new props.iScroll(wrapper, this.props.options);
+      this.iReactIScrollInstance = new props.iScroll(wrapper, this.props.options);
 
       // Register listeners for events
       iScrollEventsMap.map(elem => {
         if (props[elem[1]]) {
-          this.props.iScroll.on(elem[0], wrapFunc(props[elem[1]]))
+          this.iReactIScrollInstance.on(elem[0], wrapFunc(props[elem[1]]))
         }
       });
 
       // If PullDownToRefresh is enabled, we need to register more listeners
       if (props.pullDownToRefresh) {
-        this.props.iScroll.on("scrollStart", wrapFunc(this.onScrollStart));
-        this.props.iScroll.on("scroll", wrapFunc(this.onScroll));
-        //this.props.iScroll.on("scrollEnd", wrapFunc(this.onScroll))
+        this.iReactIScrollInstance.on("scrollStart", wrapFunc(this.onScrollStart));
+        this.iReactIScrollInstance.on("scroll", wrapFunc(this.onScroll));
+        //this.iReactIScrollInstance.on("scrollEnd", wrapFunc(this.onScroll))
       }
     }
   }
@@ -199,9 +198,6 @@ class ReactIScroll extends React.Component {
   }
 
   componentDidMount() {
-
-    console.log('ReactIScroll componentDidMount props', this.props);
-
     this.updateIScroll()
   }
 
