@@ -1,12 +1,12 @@
 {
   "name": "iscroll-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Encapsulating iScroll as a react component",
   "main": "dist/iscroll-react.js",
   "scripts": {
     "start": "webpack-dev-server",
     "examples": "NODE_ENV=examples webpack-dev-server",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production webpack && NODE_ENV=unminified webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
