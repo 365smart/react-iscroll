@@ -57,8 +57,6 @@ class ReactIScroll extends React.Component {
       right: PropTypes.number,
     }),
 
-    // enablePullDownToRefresh: PropTypes.bool,
-
     // If you want to enabled PullDownToRefresh feature,
     // ensure the iScroll prop you passed is "iscroll-probe"
     pullDownToRefresh: PropTypes.shape({
@@ -71,16 +69,12 @@ class ReactIScroll extends React.Component {
       activeDistance: PropTypes.number,
       // onRefresh func
       onRefresh: PropTypes.func.isRequired,
-    }),
-
-    // touchend listener is used for PullDownToRefresh
-    listenToTouchEnd: PropTypes.bool
+    })
   };
 
   constructor(props) {
     super(props);
 
-    // if (props.enablePullDownToRefresh) {
     if (props.pullDownToRefresh) {
       this.props.options.probeType = 2
     }
@@ -90,7 +84,10 @@ class ReactIScroll extends React.Component {
       pullDownVisible: false,
     };
 
+    // reference to iscroll instance
     this.iReactIScrollInstance = null;
+    // touchend listener is used for PullDownToRefresh
+    this.listenToTouchEnd = false;
 
     this.onScroll = this.onScroll.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
@@ -120,7 +117,6 @@ class ReactIScroll extends React.Component {
       if (props.alwaysScroll) {
         scroller.style.minHeight = (wrapper.clientHeight + 1) + "px"
       }
-
 
       // If iscroll instance exists, just update
       if (this.iReactIScrollInstance) {
@@ -156,8 +152,8 @@ class ReactIScroll extends React.Component {
   }
 
   onScrollStart() {
-    if (!this.props.listenToTouchEnd) {
-      this.props.listenToTouchEnd = true;
+    if (!this.listenToTouchEnd) {
+      this.listenToTouchEnd = true;
       document.documentElement.addEventListener("touchend", this.onTouchEnd);
     }
   }
@@ -180,6 +176,7 @@ class ReactIScroll extends React.Component {
         pullDownActive,
       })
     }
+
     let pullDown = this.refs.pullDown;
     if (pullDown) {
       pullDown.style.top = (iScrollInstance.y - pullDown.clientHeight - 5) + "px"
@@ -202,13 +199,13 @@ class ReactIScroll extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.iScroll) {
-      this.props.iScroll.destroy();
-      this.props.iScroll = null
+    if (this.props.iScroll && this.props.iReactIScrollInstance) {
+      this.props.iReactIScrollInstance.destroy();
+      this.props.iReactIScrollInstance = null
     }
 
-    if (this.props.listenToTouchEnd) {
-      this.props.listenToTouchEnd = false;
+    if (this.listenToTouchEnd) {
+      this.listenToTouchEnd = false;
       document.documentElement.removeEventListener("touchend", this.onTouchEnd)
     }
   }
@@ -227,10 +224,12 @@ class ReactIScroll extends React.Component {
       } else {
         label = pullDownToRefresh.labelInactive
       }
+
       return <div style={{position: "relative"}}>
         <div id="pull-down" ref="pullDown">{label}</div>
       </div>
     }
+
     return null
   }
 
@@ -250,8 +249,7 @@ class ReactIScroll extends React.Component {
 
 ReactIScroll.defaultProps = {
   alwaysScroll: true,
-  dynamicTop: false,
-  listenToTouchEnd: false
+  dynamicTop: false
 };
 
 export default ReactIScroll
