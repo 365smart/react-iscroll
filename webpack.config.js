@@ -8,6 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
+const isUnminified = nodeEnv === 'unminified';
 const isExamples = nodeEnv === 'examples';
 
 const plugins = [];
@@ -37,7 +38,8 @@ if (isProduction) {
       sourceMap: false
     })
   );
-} else {
+}
+if (isExamples) {
   plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
@@ -102,12 +104,12 @@ if (isExamples) {
     // Here the application starts executing
     // and webpack starts bundling
     entry: {
-      'react-iscroll': './src/ReactIScroll.js'
+      'iscroll-react': './src/ReactIScroll.js'
     },
     // options related to how webpack emits results
     output: {
       // the filename template for entry chunks
-      filename: '[name].js',
+      filename: isUnminified ? '[name].js' : '[name]-min.js',
       library: 'iscroll-react',
       libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist/')
