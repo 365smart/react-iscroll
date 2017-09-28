@@ -85,7 +85,7 @@ class ReactIScroll extends React.Component {
     };
 
     // reference to iscroll instance
-    this.iReactIScrollInstance = null;
+    this._iScroll = null;
     // touchend listener is used for PullDownToRefresh
     this.listenToTouchEnd = false;
 
@@ -119,26 +119,26 @@ class ReactIScroll extends React.Component {
       }
 
       // If iscroll instance exists, just update
-      if (this.iReactIScrollInstance) {
-        this.iReactIScrollInstance.refresh();
+      if (this._iScroll) {
+        this._iScroll.refresh();
         return;
       }
 
       // Create new iscroll instance here
-      this.iReactIScrollInstance = new props.iScroll(wrapper, this.props.options);
+      this._iScroll = new props.iScroll(wrapper, this.props.options);
 
       // Register listeners for events
       iScrollEventsMap.map(elem => {
         if (props[elem[1]]) {
-          this.iReactIScrollInstance.on(elem[0], wrapFunc(props[elem[1]]))
+          this._iScroll.on(elem[0], wrapFunc(props[elem[1]]))
         }
       });
 
       // If PullDownToRefresh is enabled, we need to register more listeners
       if (props.pullDownToRefresh) {
-        this.iReactIScrollInstance.on("scrollStart", wrapFunc(this.onScrollStart));
-        this.iReactIScrollInstance.on("scroll", wrapFunc(this.onScroll));
-        //this.iReactIScrollInstance.on("scrollEnd", wrapFunc(this.onScroll))
+        this._iScroll.on("scrollStart", wrapFunc(this.onScrollStart));
+        this._iScroll.on("scroll", wrapFunc(this.onScroll));
+        //this._iScroll.on("scrollEnd", wrapFunc(this.onScroll))
       }
     }
   }
@@ -199,9 +199,9 @@ class ReactIScroll extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.iScroll && this.props.iReactIScrollInstance) {
-      this.props.iReactIScrollInstance.destroy();
-      this.props.iReactIScrollInstance = null
+    if (this.props.iScroll && this.props._iScroll) {
+      this.props._iScroll.destroy();
+      this.props._iScroll = null
     }
 
     if (this.listenToTouchEnd) {
