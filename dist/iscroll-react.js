@@ -126,7 +126,7 @@ var ReactIScroll = function (_React$Component) {
     };
 
     // reference to iscroll instance
-    _this.iReactIScrollInstance = null;
+    _this._iScroll = null;
     // touchend listener is used for PullDownToRefresh
     _this.listenToTouchEnd = false;
 
@@ -168,26 +168,26 @@ var ReactIScroll = function (_React$Component) {
         }
 
         // If iscroll instance exists, just update
-        if (this.iReactIScrollInstance) {
-          this.iReactIScrollInstance.refresh();
+        if (this._iScroll) {
+          this._iScroll.refresh();
           return;
         }
 
         // Create new iscroll instance here
-        this.iReactIScrollInstance = new props.iScroll(wrapper, this.props.options);
+        this._iScroll = new props.iScroll(wrapper, this.props.options);
 
         // Register listeners for events
         iScrollEventsMap.map(function (elem) {
           if (props[elem[1]]) {
-            _this2.iReactIScrollInstance.on(elem[0], (0, _utils.wrapFunc)(props[elem[1]]));
+            _this2._iScroll.on(elem[0], (0, _utils.wrapFunc)(props[elem[1]]));
           }
         });
 
         // If PullDownToRefresh is enabled, we need to register more listeners
         if (props.pullDownToRefresh) {
-          this.iReactIScrollInstance.on("scrollStart", (0, _utils.wrapFunc)(this.onScrollStart));
-          this.iReactIScrollInstance.on("scroll", (0, _utils.wrapFunc)(this.onScroll));
-          //this.iReactIScrollInstance.on("scrollEnd", wrapFunc(this.onScroll))
+          this._iScroll.on("scrollStart", (0, _utils.wrapFunc)(this.onScrollStart));
+          this._iScroll.on("scroll", (0, _utils.wrapFunc)(this.onScroll));
+          //this._iScroll.on("scrollEnd", wrapFunc(this.onScroll))
         }
       }
     }
@@ -254,9 +254,9 @@ var ReactIScroll = function (_React$Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      if (this.props.iScroll && this.props.iReactIScrollInstance) {
-        this.props.iReactIScrollInstance.destroy();
-        this.props.iReactIScrollInstance = null;
+      if (this.props.iScroll && this.props._iScroll) {
+        this.props._iScroll.destroy();
+        this.props._iScroll = null;
       }
 
       if (this.listenToTouchEnd) {
@@ -522,7 +522,7 @@ exports = module.exports = __webpack_require__(6)(undefined);
 
 
 // module
-exports.push([module.i, ".react-iscroll #wrapper {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  overflow: hidden;\n}\n.react-iscroll #scroller {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  width: 100%;\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n}\n.react-iscroll #pull-down {\n  color: #999;\n  z-index: -1;\n  width: 100%;\n  position: absolute;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, ".react-iscroll #wrapper {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  overflow: hidden;\n}\n.react-iscroll #scroller {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  width: 100%;\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n  -ms-touch-action: none;\n  touch-action: none;\n}\n.react-iscroll #pull-down {\n  color: #999;\n  z-index: -1;\n  width: 100%;\n  position: absolute;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
