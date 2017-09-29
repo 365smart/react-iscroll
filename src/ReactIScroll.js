@@ -120,7 +120,7 @@ class ReactIScroll extends React.Component {
 
       // If iscroll instance exists, just update
       if (this._iScroll) {
-        this._iScroll.refresh();
+        this._iScroll.refresh({options:this.props.options});
         return;
       }
 
