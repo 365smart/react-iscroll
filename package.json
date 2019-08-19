@@ -1,5 +1,5 @@
 {
-  "name": "iscroll-react",
+  "name": "iscroll-react-365",
   "version": "1.0.4",
   "description": "Encapsulating iScroll as a react component",
   "main": "dist/iscroll-react.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swenyang/react-iscroll.git"
+    "url": "git+https://github.com/365smart/react-iscroll.git"
   },
   "keywords": [
     "react",
@@ -23,12 +23,12 @@
     "to",
     "refresh"
   ],
-  "author": "swenyang",
+  "author": "365",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/swenyang/react-iscroll/issues"
+    "url": "https://github.com/365smart/react-iscroll/issues"
   },
-  "homepage": "https://github.com/swenyang/react-iscroll#readme",
+  "homepage": "https://github.com/365smart/react-iscroll#readme",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
